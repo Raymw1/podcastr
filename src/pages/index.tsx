@@ -3,6 +3,8 @@ import enUS from 'date-fns/locale/en-US';
 import type { GetStaticProps, NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext } from 'react';
+import { PlayerContext } from '../contexts/PlayerContext';
 import { api } from '../services/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
 import styles from './home.module.scss';
@@ -26,12 +28,14 @@ type HomeProps = {
 };
 
 const Home: NextPage = ({ latestEpisodes, allEpisodes }: HomeProps) => {
+  const { play } = useContext(PlayerContext);
+
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
         <h2>Latest episodes</h2>
         <ul>
-          {latestEpisodes?.map((episode) => (
+          {latestEpisodes?.map((episode: Episode) => (
             <li key={episode.id}>
               <Image
                 width={96}
@@ -48,7 +52,7 @@ const Home: NextPage = ({ latestEpisodes, allEpisodes }: HomeProps) => {
                 <span>{episode.publishedAt}</span>
                 <span>{episode.durationAsString}</span>
               </div>
-              <button type='button'>
+              <button type='button' onClick={() => play(episode)}>
                 <img src='/play-green.svg' alt='Play episode' />
               </button>
             </li>
