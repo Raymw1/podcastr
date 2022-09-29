@@ -49,6 +49,7 @@ export function Player() {
           </div>
           <span>00:00</span>
         </div>
+        {episode && <audio src={episode.url} autoPlay />}
         <div className={styles.buttons}>
           <button type='button' disabled={!episode}>
             <img src='/shuffle.svg' alt='Shuffle' />
@@ -56,7 +57,11 @@ export function Player() {
           <button type='button' disabled={!episode}>
             <img src='/play-previous.svg' alt='Play previous' />
           </button>
-          <button type='button' className={styles.playButton} disabled={!episode}>
+          <button
+            type='button'
+            className={styles.playButton}
+            disabled={!episode}
+          >
             <img src='/play.svg' alt='Play' />
           </button>
           <button type='button' disabled={!episode}>
