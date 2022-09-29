@@ -7,8 +7,13 @@ import 'rc-slider/assets/index.css';
 
 export function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { episodeList, currentEpisodeIndex, isPlaying, togglePlay } =
-    useContext(PlayerContext);
+  const {
+    episodeList,
+    currentEpisodeIndex,
+    isPlaying,
+    togglePlay,
+    setPlayingState,
+  } = useContext(PlayerContext);
 
   const episode = episodeList[currentEpisodeIndex];
 
@@ -60,7 +65,15 @@ export function Player() {
           </div>
           <span>00:00</span>
         </div>
-        {episode && <audio src={episode.url} autoPlay ref={audioRef} />}
+        {episode && (
+          <audio
+            src={episode.url}
+            autoPlay
+            ref={audioRef}
+            onPlay={() => setPlayingState(true)}
+            onPause={() => setPlayingState(false)}
+          />
+        )}
         <div className={styles.buttons}>
           <button type='button' disabled={!episode}>
             <img src='/shuffle.svg' alt='Shuffle' />
